@@ -1,0 +1,78 @@
+import axios from "axios";
+import type {
+  Movie,
+  MovieDetail,
+  Genre,
+  PaginatedResponse,
+} from "../types/movie";
+
+const BASE_URL = "https://api.themoviedb.org/3";
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string;
+
+export const IMAGE_BASE = "https://image.tmdb.org/t/p";
+export const getPosterUrl = (path: string | null, size = "w342") =>
+  path ? `${IMAGE_BASE}/${size}${path}` : "/placeholder-poster.svg";
+export const getBackdropUrl = (path: string | null, size = "w1280") =>
+  path ? `${IMAGE_BASE}/${size}${path}` : null;
+
+const client = axios.create({
+  baseURL: BASE_URL,
+  params: { api_key: API_KEY, language: "en-US" },
+});
+
+// --- Movies ---
+export const fetchNowPlaying = (page = 1) =>
+  client
+    .get<PaginatedResponse<Movie>>("/movie/now_playing", { params: { page } })
+    .then((r) => r.data);
+
+export const fetchPopular = (page = 1) =>
+  client
+    .get<PaginatedResponse<Movie>>("/movie/popular", { params: { page } })
+    .then((r) => r.data);
+
+export const fetchTopRated = (page = 1) =>
+  client
+    .get<PaginatedResponse<Movie>>("/movie/top_rated", { params: { page } })
+    .then((r) => r.data);
+
+export const fetchUpcoming = (page = 1) =>
+  client
+    .get<PaginatedResponse<Movie>>("/movie/upcoming", { params: { page } })
+    .then((r) => r.data);
+
+export const fetchMovieDetail = (id: number) =>
+  client
+    .get<MovieDetail>(`/movie/${id}`, {
+      params: { append_to_response: "credits" },
+    })
+    .then((r) => r.data);
+
+export const fetchSimilarMovies = (id: number) =>
+  client
+    .get<PaginatedResponse<Movie>>(`/movie/${id}/similar`)
+    .then((r) => r.data);
+
+// --- Search ---
+export interface SearchParams {
+  query: string;
+  page?: number;
+  year?: string;
+}
+export const searchMovies = ({ query, page = 1, year }: SearchParams) =>
+  client
+    .get<PaginatedResponse<Movie>>("/search/movie", {
+      params: { query, page, ...(year ? { year } : {}) },
+    })
+    .then((r) => r.data);
+
+export const discoverMovies = (params: Record<string, string | number>) =>
+  client
+    .get<PaginatedResponse<Movie>>("/discover/movie", { params })
+    .then((r) => r.data);
+
+// --- Genres ---
+export const fetchGenres = () =>
+  client
+    .get<{ genres: Genre[] }>("/genre/movie/list")
+    .then((r) => r.data.genres);
