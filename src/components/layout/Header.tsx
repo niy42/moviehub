@@ -20,7 +20,7 @@ export function Header({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <header className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-4 glass border-b border-surface-border sticky top-0 z-30">
+    <header className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-4 glass white-glassmorphism border-b border-surface-border sticky top-0 z-30">
       {/* Hamburger Menu - Mobile Only */}
       <button
         onClick={toggleMobileMenu}
