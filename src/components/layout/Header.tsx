@@ -1,4 +1,4 @@
-import { XIcon } from "@/assets"; // Make sure you have MenuIcon (hamburger)
+import { MoonIcon, SearchIcon, SunIcon, XIcon } from "@/assets"; // Make sure you have MenuIcon (hamburger)
 import { useSearch } from "@/contexts/SearchContext";
 import { useRef } from "react";
 import { MenuIconSolid } from "../ui/MenuIcon";
@@ -33,20 +33,11 @@ export function Header({
       {/* Search Bar - Takes most space */}
       <div className="flex-1 max-w-lg md:max-w-2xl">
         <div className="relative group">
-          <svg
-            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-brand-primary transition-colors pointer-events-none"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 15.803a7.5 7.5 0 0 0 10.607 0z"
-            />
-          </svg>
-
+          <SearchIcon
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4
+          text-text-muted group-focus-within:text-brand-primary
+          transition-colors pointer-events-none"
+          />
           <input
             ref={inputRef}
             type="text"
@@ -62,7 +53,6 @@ export function Header({
               e.currentTarget.style.boxShadow = "none";
             }}
           />
-
           {inputValue && (
             <button
               onClick={clearSearch}
@@ -97,34 +87,14 @@ export function Header({
         className="relative flex items-center justify-center w-10 h-10 rounded-xl border border-surface-border bg-surface-elevated hover:bg-surface-card text-text-secondary hover:text-text-primary transition-all duration-200 active:scale-95 shrink-0"
       >
         {/* Sun icon — shown in dark mode */}
-        <svg
-          className={`absolute w-4.5 h-4.5 transition-all duration-300 ${isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.8}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0z"
-          />
-        </svg>
+        <SunIcon
+          className={`absolute w-7 h-7 transition-all duration-300 ${isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"}`}
+        />
 
         {/* Moon icon — shown in light mode */}
-        <svg
-          className={`absolute w-4 h-4 transition-all duration-300 ${!isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-75"}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.8}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998z"
-          />
-        </svg>
+        <MoonIcon
+          className={`absolute w-4.5 h-4.5 transition-all duration-300 ${!isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"}`}
+        />
       </button>
     </header>
   );
