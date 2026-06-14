@@ -1,3 +1,4 @@
+export { default as ArrowRightIcon } from "./svg/ArrowRight.svg?react";
 export { default as BackIcon } from "./svg/Back.svg?react";
 export { default as FavouriteIcon } from "./svg/Favourite.svg?react";
 export { default as HomeIcon } from "./svg/Home.svg?react";

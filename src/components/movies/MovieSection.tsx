@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@/assets";
 import { Link } from "react-router-dom";
 import type { Movie } from "../../types/movie";
 import { MovieCardSkeleton } from "../ui/Skeleton";
@@ -41,19 +42,7 @@ export function MovieSection({
             className="flex items-center gap-1 text-brand-primary hover:text-brand-hover text-sm font-semibold transition-colors group"
           >
             View all
-            <svg
-              className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
+            <ArrowRightIcon className="w-4 h-4 text-current group-hover:translate-x-0.5 transition-transform" />
           </Link>
         )}
       </div>
