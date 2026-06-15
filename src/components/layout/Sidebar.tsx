@@ -91,7 +91,7 @@ export function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
               className={`group relative flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-300 overflow-hidden ${
                 isActive
                   ? "nav-active text-white shadow-lg shadow-indigo-500/20 bg-indigo-500/10"
-                  : "dark:text-text-secondary text-zinc-400 hover:text-text-primary hover:bg-surface-elevated/70"
+                  : "dark:text-text-secondary text-text-secondary max-md:text-zinc-400 hover:text-text-primary hover:bg-surface-elevated/70"
               }`}
             >
               {/* Active Indicator Bar */}
