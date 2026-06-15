@@ -36,7 +36,8 @@ export function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
   return (
     <aside
       className={`
-    w-56 shrink-0 flex flex-col h-screen fixed left-0 top-0 glass border-r border-surface-border overflow-hidden z-50
+    w-56 shrink-0 flex flex-col h-screen fixed left-0 top-0
+    glass border-r overflow-hidden z-50
     transition-transform duration-300 ease-in-out
     md:translate-x-0
     ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
