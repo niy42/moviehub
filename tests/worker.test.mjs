@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import worker from '../worker/index.ts';
+const ctx={waitUntil(p){void p.catch(()=>{});}};
+test('health endpoint responds with JSON',async()=>{const r=await worker.fetch(new Request('https://example.test/api/health'),{},ctx);assert.equal(r.status,200);assert.match(r.headers.get('content-type'),/application\/json/);assert.equal((await r.json()).status,'ok');});
+test('invalid TMDB query is rejected before upstream request',async()=>{const r=await worker.fetch(new Request('https://example.test/api/movie/popular?page=abc'),{},ctx);assert.equal(r.status,400);assert.equal((await r.json()).error.code,'invalid_parameter');});
+test('unknown API path returns JSON 404, not SPA HTML',async()=>{const r=await worker.fetch(new Request('https://example.test/api/unknown'),{},ctx);assert.equal(r.status,404);assert.match(r.headers.get('content-type'),/application\/json/);});
+test('unsupported method is rejected',async()=>{const r=await worker.fetch(new Request('https://example.test/api/movie/popular',{method:'POST'}),{},ctx);assert.equal(r.status,405);});
+test('AI endpoint validates input before requiring configured key',async()=>{const r=await worker.fetch(new Request('https://example.test/api/ai/discover',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'x'})}),{},ctx);assert.equal(r.status,400);});
+test('personal APIs fail closed when the visitor signing secret is missing',async()=>{const r=await worker.fetch(new Request('https://example.test/api/favorites'),{DB:{}},ctx);assert.equal(r.status,503);assert.equal((await r.json()).error.code,'identity_unavailable');});
+test('AI endpoint reports unavailable when valid prompt has no API key',async()=>{const r=await worker.fetch(new Request('https://example.test/api/ai/discover',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'A thoughtful science-fiction movie'})}),{},ctx);assert.equal(r.status,503);assert.equal((await r.json()).error.code,'ai_unavailable');});
+test('oversized JSON request body is rejected',async()=>{const r=await worker.fetch(new Request('https://example.test/api/ai/discover',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'x'.repeat(13000)})}),{},ctx);assert.equal(r.status,400);});

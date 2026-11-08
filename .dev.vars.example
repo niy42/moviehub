@@ -1,0 +1,6 @@
+# Copy to .dev.vars. These values are local only; never commit real secrets.
+TMDB_API_KEY=your_tmdb_v3_api_key_here
+VISITOR_TOKEN_SECRET=replace_with_at_least_32_random_characters_for_local_development
+# Optional; AI discovery remains disabled when omitted.
+OPENROUTER_API_KEY=
+OPENROUTER_MODEL=openrouter/free
